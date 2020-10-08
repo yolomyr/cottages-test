@@ -1,0 +1,1320 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Cottage Village API Documentation",
+        "description": "",
+        "contact": {
+            "email": "afonico@info.ru"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/admin/verify/user": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Verify user account. Accessable only by administator users",
+                "description": "",
+                "operationId": "verify",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "user_id"
+                                ],
+                                "properties": {
+                                    "user_id": {
+                                        "description": "",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/booking/all/get": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Get all users bookings",
+                "description": "",
+                "operationId": "getAllBookings",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "service_id": {
+                                        "description": "",
+                                        "type": "integer"
+                                    },
+                                    "user_id": {
+                                        "description": "",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Get a JWT via given credentials",
+                "description": "",
+                "operationId": "login",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "Users email",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "Users password",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Return token object { 'access_token', 'token_type', 'expires_in' }"
+                    }
+                }
+            }
+        },
+        "/api/auth/me": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Get the authenticated User",
+                "description": "",
+                "operationId": "me",
+                "responses": {
+                    "200": {
+                        "description": "Returns user data"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Log the user out (Invalidate the token)",
+                "description": "",
+                "operationId": "logout",
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/refresh": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Refresh a token",
+                "description": "",
+                "operationId": "refresh",
+                "responses": {
+                    "200": {
+                        "description": "Return token object { 'access_token', 'token_type', 'expires_in' }"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/booking": {
+            "post": {
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Get all booking info",
+                "description": "",
+                "operationId": "index",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "service_id",
+                                    "booking_type_id"
+                                ],
+                                "properties": {
+                                    "service_id": {
+                                        "description": "Current service id. Available services - 1,Бассейн; 2,Тенистый корт; 3,Бильярд; 4,Кафе",
+                                        "type": "integer"
+                                    },
+                                    "booking_type_id": {
+                                        "description": "Booking type id, Available booking types - 1,Свободная; 2,Семейная",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/booking/create": {
+            "post": {
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Get all booking info",
+                "description": "",
+                "operationId": "create",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "service_id",
+                                    "booking_type_id",
+                                    "booking_date",
+                                    "started_at",
+                                    "finished_at"
+                                ],
+                                "properties": {
+                                    "service_id": {
+                                        "description": "Current service id. Available services - 1,Бассейн; 2,Тенистый корт; 3,Бильярд; 4,Кафе",
+                                        "type": "integer"
+                                    },
+                                    "booking_type_id": {
+                                        "description": "Booking type id, Available booking types - 1,Свободная; 2,Семейная",
+                                        "type": "integer"
+                                    },
+                                    "booking_date": {
+                                        "description": "Booking date",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2020-09-29"
+                                    },
+                                    "started_at": {
+                                        "description": "Booking start time",
+                                        "type": "string",
+                                        "format": "time",
+                                        "example": "17:50"
+                                    },
+                                    "finished_at": {
+                                        "description": "Booking end time",
+                                        "type": "string",
+                                        "format": "time",
+                                        "example": "17:50"
+                                    },
+                                    "people_number": {
+                                        "description": "People number",
+                                        "type": "integer"
+                                    },
+                                    "commentary": {
+                                        "description": "Client's commentary",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/booking/delete": {
+            "post": {
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Delete booking",
+                "description": "",
+                "operationId": "delete",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "booking_id"
+                                ],
+                                "properties": {
+                                    "booking_id": {
+                                        "description": "Current booking id",
+                                        "type": "integer"
+                                    },
+                                    "cancel_reason": {
+                                        "description": "Booking cancel reason",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/booking/user/get": {
+            "post": {
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Get users service bookings",
+                "description": "",
+                "operationId": "getUsersBookings",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "service_id": {
+                                        "description": "Current service id",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/directory/single": {
+            "post": {
+                "tags": [
+                    "Directory"
+                ],
+                "summary": "Gets single directory (related table | catalog table)",
+                "description": "",
+                "operationId": "getSingle",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "mode",
+                                    "company_id"
+                                ],
+                                "properties": {
+                                    "directory_name": {
+                                        "description": "Directory table name",
+                                        "type": "string",
+                                        "default": "user_estate_types",
+                                        "enum": [
+                                            "user_estate_types",
+                                            "genders"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/news": {
+            "post": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Get news posts",
+                "description": "",
+                "operationId": "index",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "limit": {
+                                        "description": "News limit. Default value 8",
+                                        "type": "integer"
+                                    },
+                                    "offset": {
+                                        "description": "News offset. Default value 0",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Return token object { 'access_token', 'token_type', 'expires_in' }"
+                    }
+                }
+            }
+        },
+        "/api/news/single": {
+            "post": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Get single news post",
+                "description": "",
+                "operationId": "single",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "news_id"
+                                ],
+                                "properties": {
+                                    "news_id": {
+                                        "description": "News id",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Return token object { 'access_token', 'token_type', 'expires_in' }"
+                    }
+                }
+            }
+        },
+        "/api/news/create": {
+            "post": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Create news post",
+                "description": "",
+                "operationId": "create",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "logo",
+                                    "subtitle",
+                                    "content"
+                                ],
+                                "properties": {
+                                    "logo": {
+                                        "description": "News logo image",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "subtitle": {
+                                        "description": "News subtitle",
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "description": "News content",
+                                        "type": "string"
+                                    },
+                                    "files": {
+                                        "description": "News attachments",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Return token object { 'access_token', 'token_type', 'expires_in' }"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/news/update": {
+            "post": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Update news post",
+                "description": "files paramerer only creates new files. If files not changed, u should not post this parameter",
+                "operationId": "update",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "description": "News id",
+                                        "type": "integer"
+                                    },
+                                    "logo": {
+                                        "description": "News logo image",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "subtitle": {
+                                        "description": "News subtitle",
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "description": "News content",
+                                        "type": "string"
+                                    },
+                                    "deleted_files[]": {
+                                        "description": "Attachments ids array to delete files with posts",
+                                        "type": "integer"
+                                    },
+                                    "files": {
+                                        "description": "News attachments",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/news/delete": {
+            "post": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Delete news post with attachments",
+                "description": "",
+                "operationId": "delete",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "news_id"
+                                ],
+                                "properties": {
+                                    "news_id": {
+                                        "description": "News id",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/news/delete/file": {
+            "post": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Delete news post attachment",
+                "description": "",
+                "operationId": "deleteFile",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "attachment_id"
+                                ],
+                                "properties": {
+                                    "attachment_id": {
+                                        "description": "Attachment id",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/profile/change/password": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Change auth users password",
+                "description": "",
+                "operationId": "changePassword",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "password",
+                                    "new_password",
+                                    "new_password_confirmation"
+                                ],
+                                "properties": {
+                                    "password": {
+                                        "description": "Current users password",
+                                        "type": "string"
+                                    },
+                                    "new_password": {
+                                        "description": "New users password",
+                                        "type": "string"
+                                    },
+                                    "new_password_confirmation": {
+                                        "description": "New users password confirmation",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/profile/change/email": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Change auth users email",
+                "description": "",
+                "operationId": "changeEmail",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "new_email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "Current users email",
+                                        "type": "string"
+                                    },
+                                    "new_email": {
+                                        "description": "New users email",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/profile/change": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Change auth users profile data",
+                "description": "",
+                "operationId": "changeProfile",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "Users name. Size should be less than 100 characters",
+                                        "type": "string"
+                                    },
+                                    "surname": {
+                                        "description": "Users surname. Size should be less than 100 characters",
+                                        "type": "string"
+                                    },
+                                    "birthday": {
+                                        "description": "Users birthday date",
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "gender_id": {
+                                        "description": "User gender_id, 1 = Male, 2 = Female",
+                                        "type": "integer",
+                                        "default": 1,
+                                        "enum": [
+                                            1,
+                                            2
+                                        ]
+                                    },
+                                    "phone": {
+                                        "description": "Users phone. Unique value, should be masked value in format +7 (111) 222-33-44, server proceed to format +71112223344 to save in DB and returns to client in masked format",
+                                        "type": "string"
+                                    },
+                                    "whatsapp_phone": {
+                                        "description": "Should be masked value in format +7 (111) 222-33-44",
+                                        "type": "string"
+                                    },
+                                    "telegram_phone": {
+                                        "description": "Should be masked value in format +7 (111) 222-33-44",
+                                        "type": "string"
+                                    },
+                                    "viber_phone": {
+                                        "description": "Should be masked value in format +7 (111) 222-33-44",
+                                        "type": "string"
+                                    },
+                                    "work_info": {
+                                        "description": "Size should be less than 1000 characters. Can be empty",
+                                        "type": "string"
+                                    },
+                                    "hobby_info": {
+                                        "description": "Size should be less than 1000 characters. Can be empty",
+                                        "type": "string"
+                                    },
+                                    "family_info": {
+                                        "description": "Size should be less than 1000 characters. Can be empty",
+                                        "type": "string"
+                                    },
+                                    "extra_info": {
+                                        "description": "Size should be less than 1000 characters. Can be empty",
+                                        "type": "string"
+                                    },
+                                    "user_estates": {
+                                        "description": "User estates data. estate_type_id variations is { 1: 'Участок', 2: 'Квартира'}. estate_number should be greater or equal 0. estate_number required when picked estate_type_id. If you want to update estate you should pass 'id' parameter",
+                                        "type": "string",
+                                        "format": "array",
+                                        "example": "{ 'user_estates': [ { 'id': 1, 'estate_type_id': 1, estate_number: 10 } ] }"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Register"
+                ],
+                "summary": "Register user",
+                "description": "",
+                "operationId": "register",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "surname",
+                                    "birthday",
+                                    "gender_id",
+                                    "phone"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "description": "Users name. Size should be less than 100 characters",
+                                        "type": "string"
+                                    },
+                                    "surname": {
+                                        "description": "Users surname. Size should be less than 100 characters",
+                                        "type": "string"
+                                    },
+                                    "birthday": {
+                                        "description": "Users birthday date",
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "gender_id": {
+                                        "description": "User gender_id, 1 = Male, 2 = Female",
+                                        "type": "integer",
+                                        "default": 1,
+                                        "enum": [
+                                            1,
+                                            2
+                                        ]
+                                    },
+                                    "phone": {
+                                        "description": "Users phone. Unique value, should be masked value in format +7 (111) 222-33-44, server proceed to format +71112223344 to save in DB and returns to client in masked format",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Users email. Unique value",
+                                        "type": "string"
+                                    },
+                                    "whatsapp_phone": {
+                                        "description": "Should be masked value in format +7 (111) 222-33-44",
+                                        "type": "string"
+                                    },
+                                    "telegram_phone": {
+                                        "description": "Should be masked value in format +7 (111) 222-33-44",
+                                        "type": "string"
+                                    },
+                                    "viber_phone": {
+                                        "description": "Should be masked value in format +7 (111) 222-33-44",
+                                        "type": "string"
+                                    },
+                                    "work_info": {
+                                        "description": "Size should be less than 1000 characters. Can be empty",
+                                        "type": "string"
+                                    },
+                                    "hobby_info": {
+                                        "description": "Size should be less than 1000 characters. Can be empty",
+                                        "type": "string"
+                                    },
+                                    "family_info": {
+                                        "description": "Size should be less than 1000 characters. Can be empty",
+                                        "type": "string"
+                                    },
+                                    "extra_info": {
+                                        "description": "Size should be less than 1000 characters. Can be empty",
+                                        "type": "string"
+                                    },
+                                    "user_estates": {
+                                        "description": "User estates data. estate_type_id variations is { 1: 'Участок', 2: 'Квартира'}. estate_number should be greater or equal 0. estate_number required when picked estate_type_id",
+                                        "type": "string",
+                                        "format": "json",
+                                        "example": "{ 'user_estates': [ { 'estate_type_id': 1, estate_number: 10 } ] }"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/password/reset/send": {
+            "post": {
+                "tags": [
+                    "Register"
+                ],
+                "summary": "Reset user password by email. Token from link expires in 1 hour",
+                "description": "",
+                "operationId": "passwordResetNotification",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "Users email. Unique value",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "If the user is found, the email will be sent"
+                    }
+                }
+            }
+        },
+        "/api/password/reset": {
+            "post": {
+                "tags": [
+                    "Register"
+                ],
+                "summary": "Reset user password by email",
+                "description": "",
+                "operationId": "passwordReset",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "password": {
+                                        "description": "Users new password. Minimum 8 symbols",
+                                        "type": "string"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "Users new password cpnfirmation. Minimum 8 symbols",
+                                        "type": "string"
+                                    },
+                                    "token": {
+                                        "description": "Users verification token from email. Token expires in 1 hour",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/service": {
+            "post": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Get all services posts",
+                "description": "",
+                "operationId": "index",
+                "requestBody": {},
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/service/single": {
+            "post": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Get single service post data",
+                "description": "",
+                "operationId": "single",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "service_id"
+                                ],
+                                "properties": {
+                                    "service_id": {
+                                        "description": "Service id",
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/service/create": {
+            "post": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Create service post",
+                "description": "",
+                "operationId": "create",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "logo"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "description": "Service title",
+                                        "type": "string"
+                                    },
+                                    "status_id": {
+                                        "description": "Service status. Variations: 1 - active, 2 - inactive. Default value is 1",
+                                        "type": "integer"
+                                    },
+                                    "logo": {
+                                        "description": "Service logo image",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "unavailability_reason": {
+                                        "description": "Service booking unavailability reason",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/service/update": {
+            "post": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Update service post",
+                "description": "",
+                "operationId": "update",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "description": "Service id",
+                                        "type": "integer"
+                                    },
+                                    "title": {
+                                        "description": "Service title",
+                                        "type": "string"
+                                    },
+                                    "status_id": {
+                                        "description": "Service status. Variations: 1 - active, 2 - inactive. Default value is 1",
+                                        "type": "integer"
+                                    },
+                                    "logo": {
+                                        "description": "Service logo image",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "unavailability_reason": {
+                                        "description": "Service booking unavailability reason",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer_token": []
+                    }
+                ]
+            }
+        },
+        "/api/directory/user/joinable": {
+            "post": {
+                "tags": [
+                    "Directory"
+                ],
+                "summary": "Get all related to user directories tables data",
+                "description": "To add related tables you should change $joinable_models property in UserController",
+                "operationId": "joinModels",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/api/verify/user": {
+            "get": {
+                "tags": [
+                    "Verification"
+                ],
+                "summary": "Verify user account. Accessable by link",
+                "description": "",
+                "operationId": "verify",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "description": "Verify user id",
+                                        "type": "integer"
+                                    },
+                                    "token": {
+                                        "description": "Verification token expires after 1 day",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/change/email": {
+            "get": {
+                "tags": [
+                    "Verification"
+                ],
+                "summary": "Change user email. Accessable by link",
+                "description": "",
+                "operationId": "confirmEmailChange",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "description": "Email change user id",
+                                        "type": "integer"
+                                    },
+                                    "token": {
+                                        "description": "Email change token expires after 1 day",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        },
+        "/api/approve/booking": {
+            "get": {
+                "tags": [
+                    "Verification"
+                ],
+                "summary": "Approve booking shceduler route",
+                "description": "",
+                "operationId": "approveBooking",
+                "requestBody": {},
+                "responses": {
+                    "200": {
+                        "description": "Ok"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Projects",
+            "description": "API Endpoints of Projects"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "bearer_token": {
+                "type": "apiKey",
+                "description": "Enter token in format: token_type access_token",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}
